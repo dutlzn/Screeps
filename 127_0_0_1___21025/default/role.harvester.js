@@ -14,16 +14,21 @@ var roleHarvesters = {
             }
         } else {
             // 全部都存储
-            var targets = creep.room.find(FIND_STRUCTURES, {filters: (structure) => {
-                return (structure.structureType == STRUCTURE_EXTENSION || 
-                        structure.structureType == STRUCTURE_SPAWN) &&
-                        structure.getFreeCapacity(RESOURCE_ENERGY) > 0;
-            }});
+            var targets = creep.room.find(FIND_STRUCTURES, {
+                filter: (structure) => {
+                    return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) &&
+                        structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
+                }
+            });
+
             if(targets.length > 0){
                 if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: 'red'}});
                     creep.say('🏤 存储')
                 }
+            } else {
+                creep.suicide();
+                // console.log("没有存储地方了，自杀");
             }
         }
     }

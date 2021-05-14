@@ -34,7 +34,7 @@ var createCreep = {
             Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], name, {memory: {role: 'harvester'}});
         }
 
-        let buildTarget = _.get(room.memory, ['census', 'harvester'], 3);
+        let buildTarget = _.get(room.memory, ['census', 'harvester'], 4);
         var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
         var sites = room.find(FIND_CONSTRUCTION_SITES);
         // 有建筑才去造

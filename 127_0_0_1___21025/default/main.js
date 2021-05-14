@@ -8,17 +8,13 @@ var creepFunction = require('creepFunctions');
 module.exports.loop = function () {
     // 清空内存
     clear.run();
-    // create.run();
-    // create.show();
 
-    // for(var name in Game.rooms) {
-    //     console.log('Room "'+name+'" has '+Game.rooms[name].energyAvailable+' energy');
-    // }
 
     _.forEach(Game.rooms, function(roomName) {
 
         let room = Game.rooms[roomName.name];;
         if(room && room.controller && room.controller.my) {
+            // console.log('房间:' + roomName.name +"有" + room.energyAvailable + "能量");
             create.run(room);
             create.show();
         }
