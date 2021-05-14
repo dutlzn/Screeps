@@ -263,7 +263,7 @@ https://home.unicode.org/emoji/emoji-frequency/
 
 main
 
-```
+```js
 var roleHarvester = require('role.harvester');
 var roleBuilder = require('role.builder');
 
@@ -813,3 +813,38 @@ npm install @types/screeps @types/lodash@3.10.1
 # 本地服务器实战
 
 ![](./images/1.png)
+
+
+
+[服务器指令](https://wiki.screepspl.us/index.php/Private_Server_Common_Tasks)
+
+[指令2](https://www.jianshu.com/p/d48f81acde34)
+
+
+
+```
+system.setTickDuration(1000)
+```
+
+Will set the tick-duration to 1000 milliseconds per tick, default is 1000.
+
+```
+system.getTickDuration() 
+```
+
+Will print the current tick duration.
+
+# [screeps-bot-tooangel] TooAngel bot for screeps server
+
+bots.removeUser('JackBot')
+
+bots.removeUser('AliceBot')
+
+bots.removeUser('MichaelBot')
+
+bots.removeUser('EmmaBot')
+
+. Restart server and execute in the CLI: `bots.spawn('screeps-bot-tooangel', ROOMNAME)`
+
+bots.spawn('screeps-bot-tooangel', 'W1N9')
+

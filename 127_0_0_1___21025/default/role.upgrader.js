@@ -1,3 +1,6 @@
+// var creepFunction = require('creepFunctions');
+
+
 var roleUpgrader = {
     run: function (creep) {
         if (creep.memory.upgrading && creep.store[RESOURCE_ENERGY] == 0) {
@@ -19,8 +22,9 @@ var roleUpgrader = {
             }
         } else {
             // 采集
-            var sources = creep.room.find(FIND_SOURCES);
-            var source = sources[0];;
+            // var sources = creep.room.find(FIND_SOURCES);
+            // var source = sources[0];;
+            let source = Game.getObjectById(creep.memory.source) || creep.findEnergySource();
             if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(source, { visualizePathStyle: { stroke: 'red' } });
                 creep.say('⚡ 采集');

@@ -20,27 +20,34 @@ var createCreep = {
     /**
      * 创建
      */
-    run: function() {
+    run: function(room) {
         var harvesters_num = 2;
         var upgrader_num = 2;
         var builder_num = 1;
 
-        var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == '采集');
-        if (harvesters.length < harvesters_num) {
-            var name = '采集者' + Game.time;
-            Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], name, {memory: {role: '采集'}});
+        // 每个房间一个内存
+        let harvesterTarget = _.get(room.memory, ['census', 'harvester'], 4);
+        // console.log(harvesterTarget);
+        var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
+        if (harvesters.length < harvesterTarget) {
+            var name = 'Harvester' + Game.time;
+            Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], name, {memory: {role: 'harvester'}});
         }
 
-        var builders = _.filter(Game.creeps, (creep) => creep.memory.role == '建造');
-        if (builders.length < builder_num && harvesters.length >= harvesters_num) {
-            var name = '建造者' + Game.time;
-            Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], name, {memory: {role: '建造'}});
+        let buildTarget = _.get(room.memory, ['census', 'harvester'], 3);
+        var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
+        var sites = room.find(FIND_CONSTRUCTION_SITES);
+        // 有建筑才去造
+        if (sites.length >0 && builders.length < buildTarget && harvesters.length >= harvesterTarget ) {
+            var name = 'Builder' + Game.time;
+            Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], name, {memory: {role: 'builder'}});
         }
-        
-        var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == '升级');
-        if (upgraders.length < upgrader_num && harvesters.length >= harvesters_num) {
-            var name = '升级者' + Game.time;
-            Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], name, {memory: {role: '升级'}});
+
+        let upgraderTarget = _.get(room.memory, ['census', 'upgrader'], 4);
+        var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
+        if (upgraders.length < upgraderTarget && harvesters.length >= harvesterTarget) {
+            var name = 'Upgrader' + Game.time;
+            Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], name, {memory: {role: 'upgrader'}});
         }
     }
 }

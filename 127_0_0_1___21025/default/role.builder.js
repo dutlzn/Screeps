@@ -13,16 +13,19 @@ var roleBuilder = {
 	    }
 
 	    if(creep.memory.building) {
+            // 如果没有建筑了 就自杀
 	        var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
             if(targets.length) {
                 if(creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: 'yellow'}});
                 }
+            } else {
+                creep.suicide();
+                console.log("没有建筑，自杀");
             }
 	    }
 	    else {
-            var sources = creep.room.find(FIND_SOURCES);
-            var source = sources[0];
+            let source = Game.getObjectById(creep.memory.source) || creep.findEnergySource();
             if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(source, {visualizePathStyle: {stroke: 'green'}});
             }
