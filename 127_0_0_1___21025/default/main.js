@@ -10,18 +10,37 @@ module.exports.loop = function () {
     clear.run();
 
 
-    _.forEach(Game.rooms, function(roomName) {
+
+    _.forEach(Game.rooms, function (roomName) {
 
         let room = Game.rooms[roomName.name];;
-        if(room && room.controller && room.controller.my) {
+        if (room && room.controller && room.controller.my) {
             // console.log('房间:' + roomName.name +"有" + room.energyAvailable + "能量");
             create.run(room);
             create.show();
+
+            var  towers = room.find(FIND_STRUCTURES, {filter: (stucture) => {
+                return (stucture.structureType == STRUCTURE_TOWER)
+            }});
+
+
+
+            for(var index in towers) {
+                let tower = towers[index];
+                var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
+                    filter: (structure) => structure.hits < structure.hitsMax
+                });
+                if(closestDamagedStructure) {
+                    tower.repair(closestDamagedStructure);
+                }
+        
+                var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+                if(closestHostile) {
+                    tower.attack(closestHostile);
+                }
+            }
         }
     })
-
-    
-    
 
 
     for (var name in Game.creeps) {
