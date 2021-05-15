@@ -4,7 +4,6 @@ var roleBuilder = require('role.builder');
 var roleRepair = require('role.repair');
 var roleWallRepairer = require('role.wallRepairer');
 var creepFunction = require('creepFunction');
-const { isFunction } = require('lodash');
 require('prototype.spawn');
 module.exports.loop = function() {
 
