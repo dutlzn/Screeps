@@ -8,34 +8,30 @@ module.exports = {
 
         if (!creep.memory.working && creep.store.getFreeCapacity() == 0) {
             creep.memory.working = true;
-            // creep.say('🏤 存储')
+            // creep.say('🚧 建造');
         }
 
 
         if (creep.memory.working == true) {
-            var targets = creep.room.find(FIND_STRUCTURES, {
-                filter: (structure) => {
-                    return (structure.structureType == STRUCTURE_EXTENSION ||
-                            structure.structureType == STRUCTURE_SPAWN ||
-                            structure.structureType == STRUCTURE_TOWER) &&
-                        structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
-                }
+            // repaire something 
+            var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                // 城墙
+                filter: (s) => s.hits < 0.0001 * s.hitsMax && s.structureType == STRUCTURE_WALL
             });
-
-            if (targets.length > 0) {
-                if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    // creep.say('🏤 存储')
-                    creep.moveTo(targets[0]);
+            // console.log(structure);
+            if (structure != undefined) {
+                if (creep.repair(structure) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(structure);
                 }
             } else {
                 roleUpgrader.run(creep);
-                // creep.suicide();
             }
+
         } else {
             let source = Game.getObjectById(creep.memory.source) || creep.findEnergySource();
             if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
-                // creep.say('⚡ 采集');
                 creep.moveTo(source);
+                // creep.say('⚡ 采集');
             }
         }
     }
