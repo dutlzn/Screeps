@@ -848,3 +848,6 @@ bots.removeUser('EmmaBot')
 
 bots.spawn('screeps-bot-tooangel', 'W1N9')
 
+```
+storage.db['rooms.objects'].update({ _id: '855c077511105bf' },{ $set: { level: 4 }})
+```

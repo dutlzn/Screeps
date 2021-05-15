@@ -13,18 +13,19 @@ module.exports = {
 
 
         if(creep.memory.working == true) {
-            // 如果没有建筑了 就自杀
-	        var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
-            if(targets.length > 0) {
-                if(creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targets[0]);
-                    // creep.say('🚧 建造');
+            // repaire something 
+            var structure = creep.pos.findClosestByPath(FIND_STRUCTURES,{
+                filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL && s.structureType != STRUCTURE_ROAD
+            });
+            // console.log(structure);
+            if(structure != undefined) {
+                if(creep.repair(structure) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(structure);
                 }
             } else {
                 roleUpgrader.run(creep);
-                // creep.suicide();
-                // console.log("没有建筑，自杀");
             }
+
         } else {
             var sources = creep.room.find(FIND_SOURCES);
             if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
