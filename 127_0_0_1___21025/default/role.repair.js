@@ -14,8 +14,9 @@ module.exports = {
 
         if(creep.memory.working == true) {
             // repaire something 
-            var structure = creep.pos.findClosestByPath(FIND_STRUCTURES,{
-                filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL && s.structureType != STRUCTURE_ROAD
+            var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                // 城墙
+                filter: (s) => s.hits < 0.1 * s.hitsMax && s.structureType != STRUCTURE_WALL 
             });
             // console.log(structure);
             if(structure != undefined) {

@@ -33,9 +33,11 @@ module.exports = {
             }
         } else {
             var sources = creep.room.find(FIND_SOURCES);
-            if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
+            // console.log();
+            let index = Math.floor(Math.random() * sources.length);
+            if(creep.harvest(sources[index]) == ERR_NOT_IN_RANGE) {
                 // creep.say('⚡ 采集');
-                creep.moveTo(sources[0]);
+                creep.moveTo(sources[index]);
             }
         }
     }

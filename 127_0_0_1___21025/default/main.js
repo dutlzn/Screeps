@@ -34,10 +34,10 @@ module.exports.loop = function () {
                 }
             }
 
-            var minHarvesters = 10;
+            var minHarvesters = 15;
             var minUpgraders = 1;
             var minBuilders = 1;
-            var minRepairers = 5;
+            var minRepairers = 8;
             var numHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'harvester');
             var numUpgraders = _.sum(Game.creeps, (c) => c.memory.role == 'upgrader');
             var numBuilders = _.sum(Game.creeps, (c) => c.memory.role == 'builder');
