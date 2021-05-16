@@ -13,6 +13,7 @@ module.exports = {
 
 
         if (creep.memory.working == true) {
+            // console.log(creep.room.name);
             var targets = creep.room.find(FIND_STRUCTURES, {
                 filter: (structure) => {
                     return (structure.structureType == STRUCTURE_EXTENSION ||

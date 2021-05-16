@@ -31,11 +31,17 @@ StructureSpawn.prototype.createCustomCreep = function(energe, roleName) {
             body.push(MOVE);
         }
 
+        // console.log("energe:" + energe + " body:" + body);
+
+        console.log(body);
+
         return this.spawnCreep(body, 'ldh' + Game.time, {
-            role: 'longDistanceHarvester',
-            home: home,
-            target: target,
-            sourceId: sourceId,
-            working: false
+            memory: {
+                role: 'longDistanceHarvester',
+                home: home,
+                target: target,
+                sourceId: sourceId,
+                working: false
+            }
         })
     }

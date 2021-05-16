@@ -855,3 +855,4 @@ storage.db['rooms.objects'].update({ _id: '855c077511105bf' },{ $set: { level: 4
 ```bash
 storage.db['rooms.objects'].find({ type: 'constructionSite' }).then(resp => resp.map(cs => storage.db['rooms.objects'].findOne({ _id: cs._id }).then(csDetail => storage.db['rooms.objects'].update({_id: cs._id }, {$set: { progress: csDetail.progressTotal - 1 }}))))
 ```
+

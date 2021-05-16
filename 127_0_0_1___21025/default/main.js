@@ -4,7 +4,13 @@ var roleBuilder = require('role.builder');
 var roleRepair = require('role.repair');
 var roleWallRepairer = require('role.wallRepairer');
 var creepFunction = require('creepFunction');
+var roleLongDistanceHarvester = require('role.longDistanceHarvester');
 require('prototype.spawn');
+
+
+var HOME = 'W1N1';
+
+
 module.exports.loop = function() {
 
     for (let name in Memory.creeps) {
@@ -39,6 +45,10 @@ module.exports.loop = function() {
                 if (creep.memory.role == 'wallRepairer') {
                     roleWallRepairer.run(creep);
                 }
+
+                if (creep.memory.role == 'longDistanceHarvester') {
+                    roleLongDistanceHarvester.run(creep);
+                }
             }
 
             // 塔
@@ -68,12 +78,17 @@ module.exports.loop = function() {
             var minBuilders = 1;
             var minRepairers = 1;
             var minWallRepairers = 1;
+            var minLongDistanceHarvester = 1;
+
 
             var numHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'harvester');
             var numUpgraders = _.sum(Game.creeps, (c) => c.memory.role == 'upgrader');
             var numBuilders = _.sum(Game.creeps, (c) => c.memory.role == 'builder');
             var numRepairers = _.sum(Game.creeps, (c) => c.memory.role == 'repairer');
             var numWallRepairers = _.sum(Game.creeps, (c) => c.memory.role == 'wallRepairer');
+            var numLongDistanceHarvester = _.sum(Game.creeps, (c) => c.memory.role == 'longDistanceHarvester');
+
+
 
 
             // console.log(numHarvesters + " " + numBuilders + " " + numUpgraders + " " + numRepairers);
@@ -107,6 +122,10 @@ module.exports.loop = function() {
             if (numHarvesters >= minHarvesters && numWallRepairers < minWallRepairers) {
                 // Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, WORK, MOVE], 'Repairer' + Game.time, { memory: { role: 'repairer', working: false } });
                 spawn.createCustomCreep(energy, 'wallRepairer');
+            }
+
+            if (numHarvesters >= minHarvesters && numLongDistanceHarvester < minLongDistanceHarvester) {
+                spawn.createLongDistanceHarvester(energy, 3, HOME, 'W1N2', 0);
             }
 
 
