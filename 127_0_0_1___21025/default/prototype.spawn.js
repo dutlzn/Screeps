@@ -22,18 +22,20 @@ StructureSpawn.prototype.createCustomCreep = function(energe, roleName) {
         for (let i = 0; i < numberOfWorkParts; ++i) {
             body.push(WORK);
         }
+        // console.log('energe:' + energe);
         energe -= 150 * numberOfWorkParts;
         var numberOfParts = Math.floor(energe / 100);
+        if (numberOfParts < 2) {
+            numberOfParts = 2;
+        }
         for (let i = 0; i < numberOfParts; ++i) {
             body.push(CARRY);
         }
         for (let i = 0; i < numberOfParts + numberOfWorkParts; ++i) {
             body.push(MOVE);
         }
-
-        // console.log("energe:" + energe + " body:" + body);
-
-        console.log(body);
+        // console.log(numberOfParts);
+        // console.log("energe:" + energe + " body:" + body, ' part' + numberOfParts);
 
         return this.spawnCreep(body, 'ldh' + Game.time, {
             memory: {
